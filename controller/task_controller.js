@@ -10,7 +10,7 @@ taskController.createTask= async(req,res)=>{
         await newTask.save();
         res.status(200).json({status:'ok',data : newTask})
     }catch(err){
-        res,status(400).json({status:"fail",error:err});
+        res.status(400).json({status:"fail",error:err});
         }
     };
 
