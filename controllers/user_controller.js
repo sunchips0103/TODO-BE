@@ -7,6 +7,9 @@ const userController = {}
 userController.createUser = async (req,res)=>{
     try{
         const {email,name,password} = req.body;
+        if(!email || !name || !password){
+            throw new Error("필수 항목 빠짐");
+        }
         const user = await User.findOne({email});
         if(user){
             throw new Error("이미 가입된 유저");
@@ -19,7 +22,7 @@ userController.createUser = async (req,res)=>{
    
         
     }catch(error){
-        res.status(400).json({status:"fail",error});
+        res.status(400).json({status:"fail",error:error.message});
     }
 };
 
