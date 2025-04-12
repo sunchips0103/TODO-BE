@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const  saltRounds =10; // 암호화를 몇번 할 것인지
 
@@ -43,6 +43,19 @@ userController.loginWithEmail=async(req,res)=>{
         res.status(400).json({status :"fail",message:error.message});
     }
 };
+userController.getUser= async(req,res)=>{
+    try{
+        const {userId} = req.userId; // req.userId
+        const user = await User.findById(userId);
+        if(!user){
+            throw new Error("can not find user");
+        }
+        res.status(200).json({status :"success", user});
+    }catch(error){
+        res.status(400).json({status :"fail",message: error.message});
+
+    }
+}
 
 module.exports = userController;
 
